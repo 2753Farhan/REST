@@ -121,34 +121,3 @@ The index.html file demonstrates how to load static assets and fetch data from t
 1. Modify the API response data in app.js.
 2. Reload the page and fetch the data again. The ETag will change, and the browser will receive the updated response.
 
-## Customizing ETag Generation
-
-By default, Express generates a weak ETag based on the response body. You can customize this behavior by generating your own ETag using a hash function.
-
-```javascript
-const crypto = require("crypto");
-
-app.get("/api/data", (req, res) => {
-  const data = { message: "This is cached data!", timestamp: new Date() };
-  const dataString = JSON.stringify(data);
-  const etag = crypto.createHash("md5").update(dataString).digest("hex");
-
-  res.set("ETag", etag);
-  res.json(data);
-});
-```
-
-## Disabling ETag
-
-If you don't want to use ETag, you can disable it in Express:
-
-```javascript
-app.disable("etag");
-```
-
-## Summary of Best Practices
-
-- Use `Cache-Control` to define caching policies for static assets and API responses.
-- Use ETag for cache validation to avoid unnecessary data transfer.
-- Cache static assets aggressively (e.g., max-age=31536000 for 1 year) and use versioning for cache busting.
-- Use `no-cache` or `no-store` for dynamic or sensitive data.
