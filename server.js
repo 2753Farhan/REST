@@ -19,8 +19,6 @@ app.get('/api/posts/:year/:month', (req, res) => {
     res.send(req.params);
 } );
 
-
-
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
