@@ -3,20 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Caching Demo</title>
+  <title>HTTP Caching Demo</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <h1>Welcome to the Simple Caching Demo!</h1>
-  <p>This page demonstrates HTTP caching for static assets and API responses.</p>
+  <h1>HTTP Caching Demo</h1>
+  <p>This page demonstrates HTTP caching with If-Modified-Since.</p>
+
   <button id="fetchData">Fetch Data</button>
+  <button id="updateData">Update Data</button>
   <pre id="output"></pre>
 
   <script>
+    const output = document.getElementById("output");
+
+    // Fetch data from the API
     document.getElementById("fetchData").addEventListener("click", async () => {
       const response = await fetch("/api/data");
+      if (response.status === 304) {
+        output.textContent = "Resource not modified (304). Using cached version.";
+      } else {
+        const data = await response.json();
+        output.textContent = JSON.stringify(data, null, 2);
+      }
+    });
+
+    // Update the data in the text file
+    document.getElementById("updateData").addEventListener("click", async () => {
+      const response = await fetch("/api/update", { method: "POST" });
       const data = await response.json();
-      document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+      output.textContent = `Data updated! Last Modified: ${data.lastModified}`;
     });
   </script>
 </body>
