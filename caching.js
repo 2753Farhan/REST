@@ -47,7 +47,7 @@ app.get("/api/data", (req, res) => {
 
 // Route to update the data in the text file (simulate a change)
 app.post("/api/update", (req, res) => {
-  const newData = "This is updated data!";
+  const newData = `This is updated data at ${new Date().toISOString()}!`;
   fs.writeFile(path.join(__dirname, "data.txt"), newData, (err) => {
     if (err) {
       return res.status(500).json({ message: "Failed to update data" });
