@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Caching Demo</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Welcome to the Simple Caching Demo!</h1>
+  <p>This page demonstrates HTTP caching for static assets and API responses.</p>
+  <button id="fetchData">Fetch Data</button>
+  <pre id="output"></pre>
+
+  <script>
+    document.getElementById("fetchData").addEventListener("click", async () => {
+      const response = await fetch("/api/data");
+      const data = await response.json();
+      document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>
