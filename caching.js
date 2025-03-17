@@ -42,7 +42,7 @@ app.get("/api/data", (req, res) => {
   if (ifModifiedSince && new Date(ifModifiedSince) >= getLastModified()) {
     // Resource hasn't changed, send 304 Not Modified
     return res.status(304).send();
-  }
+  }n
 
   // Read data from the text file (dummy database)
   fs.readFile(path.join(__dirname, "data.txt"), "utf8", (err, data) => {
